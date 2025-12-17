@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { LayoutDashboard, FileInput, BrainCircuit, BarChart3, Settings, Menu, X } from 'lucide-react';
+import { LayoutDashboard, FileInput, BrainCircuit, BarChart3, Settings, Menu, X, ExternalLink } from 'lucide-react';
 import { Dashboard } from './components/Dashboard';
 import { DataInput } from './components/DataInput';
 import { Analysis } from './components/Analysis';
@@ -57,7 +57,7 @@ const App = () => {
                 <div className="absolute bottom-[-10%] right-[-10%] w-[40%] h-[40%] bg-accent/10 rounded-full blur-[100px]"></div>
              </div>
 
-            <div className="z-10 text-center max-w-2xl animate-fade-in">
+            <div className="z-10 text-center max-w-2xl animate-fade-in mb-12">
                 <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/5 border border-white/10 mb-8">
                     <span className="w-2 h-2 rounded-full bg-success"></span>
                     <span className="text-xs font-medium text-secondary tracking-wider">SYSTEM OPERATIONAL EFFICIENCY v2.0</span>
@@ -75,6 +75,22 @@ const App = () => {
                 >
                     Launch Dashboard
                 </button>
+            </div>
+
+            {/* Developer Credit Footer */}
+            <div className="absolute bottom-8 z-10 text-center animate-fade-in">
+                <p className="text-[10px] uppercase tracking-widest text-secondary/60 mb-2">Developed By</p>
+                <a 
+                    href="https://almightportfolio.vercel.app/" 
+                    target="_blank" 
+                    rel="noopener noreferrer"
+                    className="group flex items-center justify-center gap-2 px-4 py-2 rounded-full bg-white/5 border border-white/5 hover:bg-white/10 hover:border-primary/30 transition-all duration-300"
+                >
+                    <span className="text-sm font-medium text-gray-300 group-hover:text-white transition-colors">
+                        Akana Signing Josias Aaron (Almight)
+                    </span>
+                    <ExternalLink size={14} className="text-secondary group-hover:text-primary transition-colors" />
+                </a>
             </div>
         </div>
     );
