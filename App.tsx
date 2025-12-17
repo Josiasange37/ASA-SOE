@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { LayoutDashboard, FileInput, BrainCircuit, BarChart3, Settings, Menu, X, ExternalLink } from 'lucide-react';
+import { LayoutDashboard, FileInput, BrainCircuit, BarChart3, Settings, Menu, X, ExternalLink, Info, Activity, ShieldCheck, Server, Zap } from 'lucide-react';
 import { Dashboard } from './components/Dashboard';
 import { DataInput } from './components/DataInput';
 import { Analysis } from './components/Analysis';
@@ -14,6 +14,7 @@ const App = () => {
   const [history, setHistory] = useState<SystemSnapshot[]>([]);
   const [currentSnapshot, setCurrentSnapshot] = useState<SystemSnapshot | null>(null);
   const [sidebarOpen, setSidebarOpen] = useState(false);
+  const [showInfoModal, setShowInfoModal] = useState(false);
 
   useEffect(() => {
     // Load initial data
@@ -69,12 +70,21 @@ const App = () => {
                     The enterprise standard for visualizing reliability, efficiency, and performance. 
                     Now powered by Gemini AI for human-like system diagnosis.
                 </p>
-                <button 
-                    onClick={() => setCurrentPage('dashboard')}
-                    className="px-8 py-4 bg-white text-black font-semibold rounded-full hover:scale-105 transition-transform shadow-xl shadow-white/10"
-                >
-                    Launch Dashboard
-                </button>
+                <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
+                    <button 
+                        onClick={() => setCurrentPage('dashboard')}
+                        className="px-8 py-4 bg-white text-black font-semibold rounded-full hover:scale-105 transition-transform shadow-xl shadow-white/10 w-full sm:w-auto"
+                    >
+                        Launch Dashboard
+                    </button>
+                    <button 
+                        onClick={() => setShowInfoModal(true)}
+                        className="px-8 py-4 bg-white/5 text-white border border-white/10 font-semibold rounded-full hover:bg-white/10 transition-colors flex items-center justify-center gap-2 w-full sm:w-auto"
+                    >
+                        <Info size={20} />
+                        What is SOE?
+                    </button>
+                </div>
             </div>
 
             {/* Developer Credit Footer */}
@@ -92,6 +102,72 @@ const App = () => {
                     <ExternalLink size={14} className="text-secondary group-hover:text-primary transition-colors" />
                 </a>
             </div>
+
+            {/* Info Modal */}
+            {showInfoModal && (
+                <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-md animate-fade-in" onClick={() => setShowInfoModal(false)}>
+                    <div className="bg-surface border border-white/10 rounded-2xl max-w-2xl w-full p-6 md:p-8 shadow-2xl relative animate-slide-up" onClick={e => e.stopPropagation()}>
+                        <button 
+                            onClick={() => setShowInfoModal(false)} 
+                            className="absolute top-4 right-4 text-secondary hover:text-white transition-colors"
+                        >
+                            <X size={24} />
+                        </button>
+                        
+                        <div className="flex items-center gap-3 mb-6">
+                            <div className="p-3 rounded-full bg-primary/20 text-primary">
+                                <BrainCircuit size={24} />
+                            </div>
+                            <h2 className="text-2xl font-bold text-white">Understanding SOE</h2>
+                        </div>
+
+                        <p className="text-gray-300 mb-8 leading-relaxed">
+                            System Operational Efficiency (SOE) is a composite score (0-100) that quantifies the overall health of your software. 
+                            It is calculated using a weighted algorithm across four critical pillars:
+                        </p>
+
+                        <div className="grid md:grid-cols-2 gap-4">
+                            <div className="p-4 rounded-xl bg-white/5 border border-white/5 flex gap-4 hover:border-blue-500/30 transition-colors">
+                                <Activity className="text-blue-400 shrink-0" size={24} />
+                                <div>
+                                    <h3 className="text-blue-100 font-semibold mb-1">Availability</h3>
+                                    <p className="text-sm text-gray-400">Measures system uptime. High availability ensures your service is accessible to users when they need it.</p>
+                                </div>
+                            </div>
+                            <div className="p-4 rounded-xl bg-white/5 border border-white/5 flex gap-4 hover:border-green-500/30 transition-colors">
+                                <ShieldCheck className="text-green-400 shrink-0" size={24} />
+                                <div>
+                                    <h3 className="text-green-100 font-semibold mb-1">Reliability</h3>
+                                    <p className="text-sm text-gray-400">Tracks error frequency. A reliable system processes requests correctly without failing.</p>
+                                </div>
+                            </div>
+                            <div className="p-4 rounded-xl bg-white/5 border border-white/5 flex gap-4 hover:border-purple-500/30 transition-colors">
+                                <Server className="text-purple-400 shrink-0" size={24} />
+                                <div>
+                                    <h3 className="text-purple-100 font-semibold mb-1">Efficiency</h3>
+                                    <p className="text-sm text-gray-400">Analyzes resource usage (CPU/RAM). Efficient systems minimize cost and waste.</p>
+                                </div>
+                            </div>
+                            <div className="p-4 rounded-xl bg-white/5 border border-white/5 flex gap-4 hover:border-amber-500/30 transition-colors">
+                                <Zap className="text-amber-400 shrink-0" size={24} />
+                                <div>
+                                    <h3 className="text-amber-100 font-semibold mb-1">Performance</h3>
+                                    <p className="text-sm text-gray-400">Evaluates speed (Latency) and volume (Throughput) to ensure responsiveness.</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div className="mt-8 pt-6 border-t border-white/10 flex justify-end">
+                            <button 
+                                onClick={() => setShowInfoModal(false)}
+                                className="px-6 py-2 bg-white text-black font-semibold rounded-lg hover:bg-gray-200 transition-colors"
+                            >
+                                Got it
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            )}
         </div>
     );
   }
